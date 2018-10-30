@@ -97,13 +97,15 @@ zsh-snippets-widget-expand() {
     emulate -L zsh
     setopt extendedglob
     local MATCH
+    # trim spaces from match
 
     # _read_zsh_snippets
     source $SNIPPET_FILE
 
     # http://stackoverflow.com/questions/20832433/what-does-lbufferm-a-za-z0-9-do-in-zsh
-    LBUFFER=${LBUFFER%%(#m)[.\-+:|_a-zA-Z0-9]#}
-    LBUFFER+=${zshSnippetArr[$MATCH]:-$MATCH}
+    LBUFFER=${LBUFFER%%[[:blank:]]##}            # remove trailing spaces
+    LBUFFER=${LBUFFER%%(#m)[.\-+:|_a-zA-Z0-9]#}  # retrieve last word on the line
+    LBUFFER+="${zshSnippetArr[$MATCH]:-$MATCH}"  # return expansion value or word if no match
 
     zle -M "" # clean screen after snippet expansion
 }
@@ -111,27 +113,31 @@ zle -N zsh-snippets-widget-expand
 
 ## command handler
 zsh_snippets() {
-    if [ $# -lt 1 ]; then
-        echo "Usage: $0 [add|delete|list]"
-    else
-        local cmd; cmd=$1
-        local shortcut; shortcut=$2
-        local snippet; snippet=$3
+    local cmd; cmd=$1
+    local shortcut; shortcut=$2
+    local snippet; snippet=$3
+    local helpmsg
 
-        case $cmd in
-            add)
-                _add_zsh_snippets $shortcut $snippet
-                [[ $? = 0 ]] && log_info "'$shortcut' snippet is added"
-            ;;
-            delete)
-                _delete_zsh_snippets $shortcut
-                [[ $? = 0 ]] && log_info "'$shortcut' snippet is deleted"
-            ;;
-            list)
-                _list_zsh_snippets
-            ;;
-        esac
-    fi
+    helpmsg="Usage: $0 [-a|--add|-d|--delete|-l|--list]"
+    helpmsg="$helpmsg\n       $0 -a <snippet> <expansion>"
+    helpmsg="$helpmsg\n       $0 -d <snippet>"
+
+    case $cmd in
+        -a|--add)
+            _add_zsh_snippets $shortcut $snippet
+            [[ $? = 0 ]] && log_info "'$shortcut' snippet is added"
+        ;;
+        -d|--delete)
+            _delete_zsh_snippets $shortcut
+            [[ $? = 0 ]] && log_info "'$shortcut' snippet is deleted"
+        ;;
+        -l|--list)
+            _list_zsh_snippets
+        ;;
+        *)
+            echo -e $helpmsg
+        ;;
+    esac
 }
 
 ## add completion file to fpath
