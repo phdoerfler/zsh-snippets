@@ -118,20 +118,20 @@ zsh_snippets() {
     local snippet; snippet=$3
     local helpmsg
 
-    helpmsg="Usage: $0 [-a|--add|-d|--delete|-l|--list]"
+    helpmsg="Usage: $0 [add|delete|list]"
     helpmsg="$helpmsg\n       $0 -a <snippet> <expansion>"
     helpmsg="$helpmsg\n       $0 -d <snippet>"
 
     case $cmd in
-        -a|--add)
+        add)
             _add_zsh_snippets $shortcut $snippet
             [[ $? = 0 ]] && log_info "'$shortcut' snippet is added"
         ;;
-        -d|--delete)
+        delete)
             _delete_zsh_snippets $shortcut
             [[ $? = 0 ]] && log_info "'$shortcut' snippet is deleted"
         ;;
-        -l|--list)
+        list)
             _list_zsh_snippets
         ;;
         *)
