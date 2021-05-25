@@ -10,6 +10,12 @@ typeset -Ag zshSnippetArr
 ZSH_SNIPPETS_VERSION="0.0.1"
 TAG="ZSH_SNIPPETS"
 
+_clean_zsh_snippets() {
+    zshSnippetArr=()
+    # serialize current snippets to file
+    typeset -p zshSnippetArr >! $SNIPPET_FILE
+}
+
 ## init
 if [ ! -e "$SNIPPET_FILE" ]; then
     $(which touch) $SNIPPET_FILE
@@ -32,12 +38,6 @@ _show_zsh_snippets_version() {
 
 _show_zsh_snippets_file() {
     echo $SNIPPET_FILE
-}
-
-_clean_zsh_snippets() {
-    zshSnippetArr=()
-    # serialize current snippets to file
-    typeset -p zshSnippetArr >! $SNIPPET_FILE
 }
 
 _add_zsh_snippets() {
