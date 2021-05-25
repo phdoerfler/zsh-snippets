@@ -1,72 +1,69 @@
 # zsh-snippets
 
-Persistent zsh-snippets based on [1ambda/zsh-snippets](https://github.com/1ambda/zsh-snippets)
+Persistent zsh-snippets based on [verboze/zsh-snippets](https://github.com/verboze/zsh-snippets)
 
-- add, udpate, delete, list snippets
+- add, update, delete, list snippets
 - supports auto-completion
 
-![](https://github.com/1ambda/zsh-snippets/blob/master/images/usage_high.gif)
+![](https://github.com/phdoerfler/zsh-snippets/blob/master/images/usage_high.gif)
 
-## Install: zplug
+👆 Note: This GIF is slightly out of date, it's from the OG repository.
 
-Setup aliases and widgets while binding keys with them
-- `CTRL-[SPACE]` expands the specified snippet
-- `CTRL-Z` lists existing snippets
+## Install
 
-```bash
+git clone to some directory
+
+<pre>
 # in .zshrc
-zplug "verboze/zsh-snippets"
+source /where/you/cloned/the/repository/to/snippets.plugin.zsh
 alias zsp="zsh_snippets"
-bindkey '^ ' zsh-snippets-widget-expand  # CTRL-[SPACE] (expand)
-bindkey '^Z' zsh-snippets-widget-list    # CTRL-Z (list)
-bindkey '^N' jump_to_tabstop_in_snippet  # CTRL-N (jump to tabstop)
+bindkey '^ ' zsh-snippets-widget-expand  # <kbd>Ctrl</kbd>+<kbd>SPACE</kbd> (expand)
+bindkey '^Z' zsh-snippets-widget-list    # <kbd>Ctrl</kbd>+<kbd>Z</kbd> (list)
+bindkey '^Y' zsh-snippets-widget-list    # <kbd>Ctrl</kbd>+<kbd>Y</kbd> (list, QWERTZ edition)
+bindkey '^N' jump_to_tabstop_in_snippet  # <kbd>Ctrl</kbd>+<kbd>N</kbd> (jump to tabstop)
+</pre>
+
+``` BASH
+exec zsh # to "reload" your zsh
 ```
+
 
 ## Usage
 
-All commands and snippets are auto-completed by stroking `tab` key
-
-```bash
+<pre>
 # add a `gj` snippet
-# tip: you could add these into your zshrc if you wish
-$ zsp --add gj "| grep java | grep -v grep"
+$ zsp add gj "| grep java | grep -v grep"
 
 # list snippets
-# or type binded key `^Z` (CTRL+Z)
-$ zsp --list
+# or type binded key `^Z` (<kbd>Ctrl</kbd>+<kbd>Z</kbd>)
+$ zsp list
 
 # expand a snippet
-# '!' means your current cursor in terminal, type your binded key `^ ` (CTRL+[SPACE])
+# type your binded key `^ ` (<kbd>Ctrl</kbd>+<kbd>Space</kbd>)
 # note: spaces after the keyword will be removed, so the two below are equivalent
-$ ps -ef gj!
-$ ps -ef gj  !
+$ ps -ef gj<<kbd>Ctrl</kbd>+<kbd>Space</kbd>>
+$ ps -ef gj  <<kbd>Ctrl</kbd>+<kbd>Space</kbd>>
 
 # will be expanded into
 $ ps -ef | grep java | grep -v grep
 
 # jump to a "tabstop" in the snippet (tabstops are defined with `${\w+}`)
-# NOTE: ! is the current cursor position in the lines below
-$ zsp --add echotest 'echo "${msg1}" "${msg2}"'!
-$ echotest! # expand the snippet to...
-$ echo "${msg1}" "${msg2}"! # now hit CTRL-N. line becomes:
+$ zsp add echotest 'echo "${msg1}" "${msg2}"'!
+$ echotest<<kbd>Ctrl</kbd>+<kbd>Space</kbd>> # expand the snippet to...
+$ echo "${msg1}" "${msg2}"! # now hit <kbd>Ctrl</kbd>+<kbd>N</kbd>. line becomes:
 $ echo "!" "${msg2}" # the cursor is now positioned where the tabstop was, with the tabstop ${msg1} deleted
-$ echo "text that I typed!" "${msg2}" # type some text, and hit CTRL-N again. Line becomes:
+$ echo "text that I typed!" "${msg2}" # type some text, and hit <kbd>Ctrl</kbd>+<kbd>N</kbd> again. Line becomes:
 $ echo "text that I typed" "!"
 
 # NOTE: when jumping to tabstops, the cursor can be anywhere on the line. We will always jump to the leftmost tabstop
 
 # delete a snippet
-zsp --delete gj
-```
+zsp delete gj
 
-## Development
+# Quoting
+zsp add red "ruby -e 'while gets(); \${code}; puts \$_ end'"
 
-Load local zsh-snippets
-
-```bash
-# in .zshrc
-zplug "$SOMEWHERE/zsh-snippets", from:local, use:'snippets.plugin.zsh'
-```
+</pre>
 
 ## License
 

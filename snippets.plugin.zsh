@@ -7,7 +7,7 @@
 SNIPPET_FILE=~/.zsh_snippets
 typeset -Ag zshSnippetArr
 
-ZSH_SNIPPETS_VERSION="0.0.1"
+ZSH_SNIPPETS_VERSION="1"
 TAG="ZSH_SNIPPETS"
 
 _clean_zsh_snippets() {
