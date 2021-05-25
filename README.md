@@ -19,7 +19,6 @@ source /where/you/cloned/the/repository/to/snippets.plugin.zsh
 alias zsp="zsh_snippets"
 bindkey '^ ' zsh-snippets-widget-expand  # <kbd>Ctrl</kbd>+<kbd>SPACE</kbd> (expand)
 bindkey '^Z' zsh-snippets-widget-list    # <kbd>Ctrl</kbd>+<kbd>Z</kbd> (list)
-bindkey '^Y' zsh-snippets-widget-list    # <kbd>Ctrl</kbd>+<kbd>Y</kbd> (list, QWERTZ edition)
 bindkey '^N' jump_to_tabstop_in_snippet  # <kbd>Ctrl</kbd>+<kbd>N</kbd> (jump to tabstop)
 </pre>
 
